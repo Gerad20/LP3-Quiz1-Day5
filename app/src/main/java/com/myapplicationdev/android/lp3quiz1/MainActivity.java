@@ -45,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("Marketing Channel","Marketing Channel",NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("this is Marketing notification notification");
+            notificationManager.createNotificationChannel(channel);
+        }
+
         Intent intent = new Intent(MainActivity.this, MainActivity.class);
         final PendingIntent pIntent = PendingIntent.getActivity (MainActivity.this, requestCode, intent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
@@ -72,12 +78,15 @@ public class MainActivity extends AppCompatActivity {
         btnPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.koala);
+
 
                 NotificationCompat.Builder builder = new
                         NotificationCompat.Builder(MainActivity.this, "default");
                 builder.setContentTitle("LP3 Quiz1");
                 builder.setContentText("Expand to see picture");
                 builder.setSmallIcon(android.R.drawable.btn_star_big_off);
+                builder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap));
                 builder.setContentIntent(pIntent);
                 builder.setAutoCancel(true);
 
@@ -107,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "default");
                 builder.setContentTitle("LP3 Quiz1");
                 builder.setContentText("Expand to see content");
+                builder.setStyle(inboxS);
+
                 builder.setSmallIcon(android.R.drawable.btn_star_big_off);
                 builder.setContentIntent(pIntent);
                 builder.setAutoCancel(true);
